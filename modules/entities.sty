@@ -1,0 +1,88 @@
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{modules/entities}
+%-------------------------------------------------------------------------------
+%                Config
+%-------------------------------------------------------------------------------
+
+\newcommand{\entrydatedelimiter}{ - }
+\newcommand{\entrydescriptionspace}{.25em}
+\newcommand{\entryspacing}{-.5em}
+
+%-------------------------------------------------------------------------------
+%                Styles
+%-------------------------------------------------------------------------------
+
+\newcommand{\entrypositionstyle}[1]{{%
+  \fontsize{9pt}{1em}\headerfont\bfseries\color{accents-text}
+  \addfontfeature{LetterSpace=2, FakeBold=0}\MakeUppercase{#1}
+}}
+\newcommand{\entrycompanystyle}[1]{{%
+    \fontsize{9pt}{1em}\headerfont\bfseries\color{black-d} #1
+}}
+\newcommand{\entrydatestyle}[1]{{%
+    \fontsize{9pt}{1em}\headerfont\bfseries\color{black-d} #1
+}}
+\newcommand{\entrylocationstyle}[1]{{%
+    \fontsize{9pt}{1em}\headerfont\bfseries\color{black} #1
+}}
+\newcommand{\entrydescriptionstyle}[1]{{%
+  \fontsize{9pt}{1em}\textfont\color{grey} #1
+}}
+
+%-------------------------------------------------------------------------------
+%                Functions
+%-------------------------------------------------------------------------------
+
+
+% \newcommand{\entry}[5]{%
+%   \vspace*{\entryspacing}
+%   \begin{tcolorbox}[breakable, width=\textwidth]
+%     \begin{minipage}[t]{.3\textwidth}
+%       \entrydatestyle{\StrSubstitute[0]{#4}{,}{\entrydatedelimiter}}
+
+%       \entrylocationstyle{#3}
+%     \end{minipage}%
+%     \begin{minipage}[t]{.7\textwidth}
+%       \entrypositionstyle{#1}
+
+%       \entrycompanystyle{#2}\vspace{\entrydescriptionspace}
+
+%       \begin{flushleft}
+%         {\entrydescriptionstyle{#5}}
+%       \end{flushleft}
+%     \end{minipage}
+%   \end{tcolorbox}
+% }
+
+\newcommand\entry[5]{%
+  % \vspace{\entryspacing}
+  \begin{minipage}[t]{.3\textwidth}
+    \entrydatestyle{\StrSubstitute[0]{#4}{,}{\entrydatedelimiter}}
+
+    \entrylocationstyle{#3}
+  \end{minipage}%
+  \begin{minipage}[t]{.7\textwidth}
+    \entrypositionstyle{#1}
+
+    \entrycompanystyle{#2}\vspace{\entrydescriptionspace}
+
+    \begin{flushleft}
+      {\entrydescriptionstyle{#5}}
+    \end{flushleft}
+  \end{minipage}
+  \vspace*{1em}
+}
+
+% Environment for bullet list containing cvitems
+\newenvironment{entrylist}
+  {%
+    \vspace{.25em}
+    \begin{itemize}[leftmargin=3ex, nosep,noitemsep]
+  }
+  {%
+    \end{itemize}
+  }
+
+%-------------------------------------------------------------------------------
+\endinput

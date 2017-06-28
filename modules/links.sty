@@ -1,0 +1,33 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{modules/links}
+
+\newcommand*{\links}[1]{\def\@links{#1}}
+\newcommand{\linkspacing}{-1em}
+
+\newcommand{\makelinkgroup}[3]{%
+    \flushleft\href{https://\s}{%
+      \noindent\begin{minipage}[t]{.2\textwidth}
+        \centering
+        \iconstyle{#1}
+      \end{minipage}%
+      \noindent\begin{minipage}[t]{.8\textwidth}
+        \sidebarheaderstyle{#2}\\
+        \sidebarcontentstyle{#3}
+      \end{minipage}
+}}
+
+\newcommand{\draw@links}{%
+  \foreach[] \s in \@links%
+  {%
+    \IfSubStr{\s}{github}
+      {\vspace{\linkspacing}\makelinkgroup{\faGithub}{Github}{\s}} {}
+
+    \IfSubStr{\s}{linkedin}
+      {\vspace{\linkspacing}\makelinkgroup{\faLinkedin}{Linkedin}{\s}} {}
+
+    \IfSubStr{\s}{vimeo}
+      {\vspace{\linkspacing}\makelinkgroup{\faVimeo}{Vimeo (showreel)}{\s}} {}
+  }
+}
+
+\endinput

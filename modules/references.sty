@@ -1,0 +1,19 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{modules/references}
+
+\newcommand*{\references}[1]{\def\@references{#1}}
+
+\newcommand{\draw@references}{%
+  \begin{flushleft}
+    \foreach[] \name/\pos/\phone/\email in \@references
+    {%
+      \sidebarheaderstyle{\name}\\
+      \sidebarcontentstyle{\pos}\\[.25em]
+      \sidebarheaderstyle{Phone: }\sidebarcontentstyle{\phone}\\
+      \sidebarheaderstyle{Email: }\sidebarcontentstyle{\email}
+      \\[1.25em]
+    }
+  \end{flushleft}
+}
+
+\endinput

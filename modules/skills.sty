@@ -1,0 +1,65 @@
+% TODO: Fix spacing after skillmodule
+%       Make it possible to do multiline entires
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{modules/skills}
+
+% Module Variables
+\newcommand*{\skills}[1]{\def\@skills{#1}}
+\newcommand{\skillbarlevel}{0}
+\newcommand{\skillbarverticalspace}{2em}
+\newcommand{\skillbarheight}{.35em}
+
+
+% NOTE: First pass
+% TODO: Refactor Cleanup
+\newcommand{\draw@skills}{%
+  \noindent
+    \foreach[] \lstsection/\lst in \@skills
+    {%
+      \vspace{-2em}%
+      \IfStrEq*{\lstsection}{}
+        {}
+        {
+          \begin{flushleft}
+            \sidebarheaderstyle{\lstsection}
+          \end{flushleft}
+          \vspace{-.6em}
+        }
+
+      \foreach[count=\i] \skill/\level in \lst%
+      {%
+        \begin{tikzpicture}
+          \ifnum\level>100
+            \renewcommand{\skillbarlevel}{100}
+          \else
+            \renewcommand{\skillbarlevel}{\level}
+          \fi
+
+          % Draw skillbars
+          \node at (0,\i*\skillbarverticalspace]) [%
+            anchor=south west%, text width=\textwidth%
+          ] (label) {\hspace{-.3em}\sidebarcontentstyle{\titlecap{\skill}}};
+          \node[%
+            rectangle,
+            anchor=west,
+            fill=grey-d,
+            inner sep=0pt,
+            minimum width=\textwidth,
+            minimum height=\skillbarheight,
+          ] at (label.south west) {};
+          \node[%
+            rectangle,
+            fill=accents,
+            inner sep=0pt,
+            minimum width=\textwidth*(\skillbarlevel/100),
+            minimum height=\skillbarheight,
+            anchor=west,
+          ] at (label.south west) {};
+        \end{tikzpicture}
+      }%
+      \vspace{1em}%
+    }%
+    \vspace{-2em}% Temp hack to avoid extra spacing after skill module
+}%
+\endinput

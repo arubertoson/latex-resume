@@ -1,0 +1,62 @@
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{modules/coverletter}
+
+\usepackage{xargs}
+\usepackage{fancyvrb}
+
+\newcommand*{\contactname}[2]{\def\@contactfirstname{#1} \def\@contactlastname{#2}}
+\newcommand*{\recipientcontact}[1]{\def\@recipientcontact{#1}}
+\newcommand*{\recipientaddress}[1]{\def\@recipientaddress{#1}}
+\newcommand*{\letteropening}[1]{\def\@letteropening{#1}}
+\newcommand*{\letterclosing}[1]{\def\@letterclosing{#1}}
+\newcommand*{\lettertitle}[1]{\def\@lettertitle{#1}}
+
+\newcommand*{\jobtitle}{\@lettertitle}
+
+\newcommand{\coverletterstyle}{\fontsize{9pt}{1em}\letterfont\color{grey}}
+
+\DeclareDocumentEnvironment{coverletter}{O {} O {coverletter}}
+  {
+
+    \ifstrempty{#1}
+      {}
+      {
+        \drawsection{\sectionmainstyle{#1}}
+        \sectionrule%
+      }
+
+    \@ifundefined{@contactlastname}
+    {\vspace*{3em}}{%
+      \profilestyle\textbf{To: \@contactfirstname\space\@contactlastname} \hfill\llap{\today}\\[1em]
+    }%
+
+    \@ifundefined{@recipientcontact}
+    {}{%
+      \profilestyle\setstretch{1.1} \hspace{-.2em}\@recipientcontact \\ \@recipientaddress
+      \vspace{2em}
+    }%
+
+    \@ifundefined{@lettertitle}
+    {}{%
+     \profilestyle\textbf{\@lettertitle}
+     \@ifundefined{@recipientcontact}
+       {\vspace*{3em}}{\vspace*{1em}}
+    }%
+
+    \@ifundefined{@letteropening}
+    {}{%
+    \@ifundefined{@contactlastname}
+      {\coverletterstyle\@letteropening,}
+	  {\coverletterstyle\@letteropening\space\@contactlastname,}
+    }
+  }
+  {
+
+    \vspace*{.5em}
+    \@letterclosing
+
+	\vspace*{.5em}
+    \textfont\textbf{\@firstname \space \@lastname}
+  }
+\endinput

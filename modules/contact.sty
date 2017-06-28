@@ -1,0 +1,29 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{modules/contact}
+
+\newcommand*{\name}[2]{\def\@firstname{#1} \def\@lastname{#2}}
+\newcommand*{\birth}[1]{\def\@birth{#1}}
+\newcommand*{\phone}[1]{\def\@phone{#1}}
+\newcommand*{\email}[1]{\def\@email{#1}}
+\newcommand*{\address}[1]{\def\@address{#1}}
+
+\newcommand{\contactgroupspacing}{0.3em}
+\newcommand{\contactgroup}[2]{%
+  \sidebarheaderstyle{#1}\\
+  \sidebarcontentstyle{#2}\\[\contactgroupspacing]
+}
+
+% TODO: Create for loop and make it optional
+\newcommand{\draw@contact}{%
+  \begin{flushleft}
+    \contactgroup{born}{\@birth}
+    \contactgroup{phone}{\@phone}
+    \contactgroup{email}{\@email}
+    % \ifstrempty{\gethomepage}
+    %   {}
+    %   {\contactgroup{web}{\gethomepage}}
+    \contactgroup{address}{\@address}
+  \end{flushleft}
+}
+
+\endinput
