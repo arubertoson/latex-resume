@@ -17,7 +17,7 @@ default: resume letter clean
 resume: resume.tex
 	$(CC) $(PDFLATEXFLAGS) $(LATEXCACHE) -jobname=$(OUTPUT_NAME) $<
 
-letter: cover_letter/cover_letter.tex
+letter: cover_letter.tex
 	$(CC) $(PDFLATEXFLAGS) $(LATEXCACHE) -jobname=$(OUTPUT_NAME) $<
 
 clean:

@@ -14,6 +14,7 @@
 
 \newcommand*{\jobtitle}{\@lettertitle}
 
+\newcommand{\profilestyle}{\fontsize{9pt}{1em}\textfont\color{grey}}
 \newcommand{\coverletterstyle}{\fontsize{9pt}{1em}\letterfont\color{grey}}
 
 \DeclareDocumentEnvironment{coverletter}{O {} O {coverletter}}
@@ -48,7 +49,7 @@
     {}{%
     \@ifundefined{@contactlastname}
       {\coverletterstyle\@letteropening,}
-	  {\coverletterstyle\@letteropening\space\@contactlastname,}
+      {\coverletterstyle\@letteropening\space\@contactlastname,}
     }
   }
   {

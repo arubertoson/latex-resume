@@ -101,20 +101,6 @@
   \pgfmathsetlength{#1}{#2}%
 }%
 
-% Macro to rename output file.
-\newcommand{\savefileas}[1]{
-  \csname @ifundefined\endcsname{savedjobname}{%
-    \immediate\write18{%
-      % xelatex -jobname=#1
-      % message{YEAAH \global\let\string\savedjobname\string\jobname}
-      % \ifpdf pdf\fi xelatex -jobname=#1\space
-      % \global\let\string\savedjobname\string\jobname%
-      % \gdef\string\jobname{\jobname}%
-      % \string\input\space\jobname.tex
-    }%
-    \stop
-  }{}%
-}
 
 %-------------------------------------------------------------------------------
 %                Layout

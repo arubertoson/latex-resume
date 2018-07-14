@@ -1,0 +1,86 @@
+% Cover Letter LaTeX Template
+%
+% Author: Marcus Albertsson <marcus.arubertoson@gmail.com>
+%
+\documentclass[a4paper]{resume}
+
+%-------------------------------------------------------------------------------
+% CUSTOM COLOR
+%-------------------------------------------------------------------------------
+
+% Uncomment for dark one style
+% \definecolor{bg}{HTML}{282c34}
+% \definecolor{bg-d}{HTML}{50555e}
+%
+% \definecolor{fg}{HTML}{ffffff}
+% \definecolor{fg-d}{HTML}{fafafa}
+%
+% \definecolor{accents}{HTML}{51afef}
+
+%-------------------------------------------------------------------------------
+% PERSONAL INFORMATION
+% Personal information can either be specified inside this document or
+% effectivly be included from an outside source using \input.
+%
+% A pro with keeping the infomation external is that you most likely won't have
+% to modify it in more than one location if you compile it together with cover
+% letter or other sources.
+%-------------------------------------------------------------------------------
+
+\input{resources/contact}
+
+%-------------------------------------------------------------------------------
+% SIDEBAR MODULES
+% Create sidebar modules and put necessary information here
+%-------------------------------------------------------------------------------
+
+\references{%
+  {%
+    Yoda/%
+    Grand Master/%
+    (+44) 1412 12 412 122/%
+    yoda@master-yoda.com%
+  },
+  {%
+    Mr. Myiagi/%
+    Karate Mentor/%
+    (+46) 12410 104 1401/%
+    miyagi@master-myagi.com%
+  }%
+}
+
+%-------------------------------------------------------------------------------
+% LETTER INFORMATION
+%-------------------------------------------------------------------------------
+
+% contact person
+\contactname{Darth}{Vader}
+
+% company informatinon
+\recipientcontact{The Empire}
+\recipientaddress{Death Star\\123 45 Galaxy\\Geonosis}
+
+\lettertitle{Application Storm Trooper}
+\letteropening{Dear Mr.}
+\letterclosing{Yours sincerely,}
+
+%-------------------------------------------------------------------------------
+% LETTER CONTENT
+%-------------------------------------------------------------------------------
+\sidebarentries{%
+  contact,
+  references%
+}
+
+%-------------------------------------------------------------------------------
+% DOCUMENT
+%-------------------------------------------------------------------------------
+\begin{document}
+  \begin{section}[Cover Letter]
+    \begin{coverletter}
+      \begin{flushleft}
+        \input{cover_letter/letter.tex}
+      \end{flushleft}
+    \end{coverletter}
+  \end{section}
+\end{document}
