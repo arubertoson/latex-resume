@@ -7,7 +7,7 @@
 % Class license:
 % LPPL v1.3c (http://www.latex-project.org/lppl)
 
-\ProvidesClass{resume}[2017/03/31 Latex Resume Class]
+\ProvidesClass{resume}[2018/07/14 Latex Resume Class]
 \NeedsTeXFormat{LaTeX2e}
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
@@ -79,6 +79,7 @@
 % Modules / Entries
 \newcommand*{\sidebarentries}[1]{\def\@sidebarentries{#1}}
 \newcommand*{\documententries}[1]{\def\@documententries{#1}}
+\newcommand*{\documentmodule}[1]{\def\@documentmodule{#1}}
 
 
 %-------------------------------------------------------------------------------
@@ -104,10 +105,12 @@
 \newcommand{\savefileas}[1]{
   \csname @ifundefined\endcsname{savedjobname}{%
     \immediate\write18{%
-      \ifpdf pdf\fi xelatex -jobname=#1\space
-      \global\let\string\savedjobname\string\jobname%
-      \gdef\string\jobname{\jobname}%
-      \string\input\space\jobname.tex
+      % xelatex -jobname=#1
+      % message{YEAAH \global\let\string\savedjobname\string\jobname}
+      % \ifpdf pdf\fi xelatex -jobname=#1\space
+      % \global\let\string\savedjobname\string\jobname%
+      % \gdef\string\jobname{\jobname}%
+      % \string\input\space\jobname.tex
     }%
     \stop
   }{}%
@@ -172,8 +175,8 @@
 
 \newcommand{\sectionspacing}{1.25em}
 \newcommand{\sectionsquash}{0.9}
-\newcommand{\sidebarsectionrulecolor}{grey-d}
-\newcommand{\sectionrulecolor}{grey-d}
+\newcommand{\sidebarsectionrulecolor}{grey}
+\newcommand{\sectionrulecolor}{grey}
 \newcommand{\sectionprefixsymbol}{//}
 \newcommand{\sectionsuffixsymbol}{}
 
@@ -199,7 +202,6 @@
   UprightFont=*-Regular,
   ItalicFont=*-Italic,
   BoldFont=*-Bold,
-  Extension=.ttf
 ]
 
 
@@ -207,17 +209,15 @@
 %                Colors
 %-------------------------------------------------------------------------------
 
-\definecolor{black}{HTML}{505b62}
-\definecolor{black-d}{HTML}{22272a}
-\definecolor{white}{HTML}{ffffff}
-\definecolor{grey}{HTML}{5B6268}
-\definecolor{grey-d}{HTML}{5B6268}
+\definecolor{grey}{HTML}{686868}
 
-\definecolor{fg}{HTML}{fefefe}
-\definecolor{bg}{HTML}{9099A2}
+\definecolor{fg}{HTML}{ffffff}
+\definecolor{fg-d}{HTML}{fafafa}
 
-\definecolor{accents}{HTML}{c7d1d1}
-\definecolor{accents-text}{HTML}{506262}
+\definecolor{bg}{HTML}{888888}
+\definecolor{bg-d}{HTML}{494949}
+
+\definecolor{accents}{HTML}{cfcfcf}
 
 
 %-------------------------------------------------------------------------------
@@ -227,11 +227,11 @@
 % Icon Styles (fontawesome)
 \newcommand{\iconstyle}[1]{{%
   \fontsize{22}{24}
-  \color{white}
+  \color{fg}
   \raisebox{-2ex}{#1}
 }}
 
-% Header Styles
+% Header Base Style
 \newcommandx*{\headerstyle}[4][1=30, 2=bg, 3=1, usedefault=@]{{%
   \headerfont%
   \pgfmathsetmacro{\localfsize}{#1*1.2}
@@ -241,6 +241,8 @@
     }%
     \scalebox{1}[#3]{\textbf{\MakeUppercase{#4}}}
 }}
+
+% Header Styles
 \newcommand{\headerfirstnamestyle}[1]{%
   \headerstyle[\firstnamefontsize][@][.9]{#1}
 }
@@ -248,27 +250,25 @@
   \headerstyle[\lastnamefontsize][@][1]{#1}
 }
 \newcommand{\headerpositionstyle}[1]{%
-  \headerstyle[10pt][accents-text][1]{#1}
+  \headerstyle[10pt][grey][1]{#1}
 }
-
-\newcommand{\profilestyle}{\fontsize{9pt}{1em}\textfont\color{grey}}
 
 % Sidebar Styles
 \newcommand{\sidebarheaderstyle}[1]{{%
-  \fontsize{10pt}{1em}\headerfont\bfseries\color{white} \titlecap{#1}
+  \fontsize{10pt}{1em}\headerfont\bfseries\color{fg} \titlecap{#1}
 }}
 \newcommand{\sidebarcontentstyle}[1]{{%
-  \fontsize{9pt}{1em}\headerfont\color{fg}
+  \fontsize{9pt}{1em}\headerfont\color{fg-d}
   \addfontfeature{LetterSpace=2, FakeBold=0} #1
 }}
 
 % Section Styles
 \newcommand{\sectionstyle}[1]{{%
-  \fontsize{16pt}{1em}\headerfont\bfseries\color{black}
+  \fontsize{16pt}{1em}\headerfont\bfseries\color{bg}
   \addfontfeature{LetterSpace=3, FakeBold=0}\MakeUppercase{#1}
 }}
 \newcommand{\sectionsidebarstyle}[1]{{%
-  \fontsize{16pt}{1em}\headerfont\bfseries\color{white}
+  \fontsize{16pt}{1em}\headerfont\bfseries\color{fg}
   \addfontfeature{LetterSpace=3, FakeBold=0}\MakeUppercase{#1}
 }}
 \newcommand{\sectionprefixstyle}[1]{{%
@@ -280,6 +280,10 @@
 %-------------------------------------------------------------------------------
 %                Fancyheader
 %-------------------------------------------------------------------------------
+
+% XXX: There might be instances where we want different styles, it would be
+% pretty a pretty mundane task to expan styles to be handled as a module and
+% easily extedable
 
 % Fanyheader is used to draw bars and other elements automatically for every
 % new page that is created in the resume
@@ -337,21 +341,10 @@
   \begin{flushleft}
     \headerfirstnamestyle{\@firstname}\\[.25em]
     \headerlastnamestyle{\@lastname}\\[.1em]
-    \headerpositionstyle{\@position}
-    \printprofile%
+    \headerpositionstyle{\@position}%
   \end{flushleft}
 }
 
-% Helper function to print profile to header.
-\newcommand{\printprofile}{%
-  \ifdef{\@profile}
-    {
-      \begin{paragraph}[0.25em][\profilestyle]
-        \vspace{.25em}
-        {\@profile}
-      \end{paragraph}
-    } {}
-}
 
 % Set document styles
 \thispagestyle{title}
@@ -503,7 +496,10 @@
 \newcommand{\populatedocument}{%
   \foreach[] \each in \@documententries%
   {%
-    \input{\each}
+    \@ifundefined{@documentmodule}
+      {\input{\each}}
+      {\input{\@documentmodule/\each}}
+    
     \vspace{\sectionspacing}
   }
 }
