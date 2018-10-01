@@ -9,7 +9,11 @@
     {%
       \sidebarheaderstyle{\name}\\
       \sidebarcontentstyle{\pos}\\[.25em]
-      \sidebarheaderstyle{Phone: }\sidebarcontentstyle{\phone}\\
+
+      \ifdefempty{\phone}
+        {}
+        {\sidebarheaderstyle{Phone: }\sidebarcontentstyle{\phone}\\}
+
       \sidebarheaderstyle{Email: }\sidebarcontentstyle{\email}
       \\[1.25em]
     }
